@@ -222,12 +222,10 @@ if __name__ == "__main__":
     else:
         # create a model based on stacked autoencoder (SAE)
         model = Sequential()
-        model.add(Dense(sae_hidden_layers[0], name="sae-0", input_dim=INPUT_DIM, activation=SAE_ACTIVATION, use_bias=SAE_BIAS))
-        i = 1  # dense layer index to avoid name conflicts
-        for units in sae_hidden_layers[1:]:
-            model.add(Dense(units, name="sae-"+str(i), activation=SAE_ACTIVATION, use_bias=SAE_BIAS))
-            i += 1
-        model.add(Dense(INPUT_DIM, activation=SAE_ACTIVATION, use_bias=SAE_BIAS))
+        model.add(Dense(sae_hidden_layers[0], name="sae-hidden-0", input_dim=INPUT_DIM, activation=SAE_ACTIVATION, use_bias=SAE_BIAS))
+        for i in range(1, len(sae_hidden_layers)):
+            model.add(Dense(sae_hidden_layers[i], name="sae-hidden-"+str(i), activation=SAE_ACTIVATION, use_bias=SAE_BIAS))
+        model.add(Dense(INPUT_DIM, name="sae-output", activation=SAE_ACTIVATION, use_bias=SAE_BIAS))
         model.compile(optimizer=SAE_OPTIMIZER, loss=SAE_LOSS)
 
         # train the model
@@ -253,11 +251,9 @@ if __name__ == "__main__":
     #     3: floor_weight, 4: floor_weight, 5: floor_weight, 6:floor_weight, 7: floor_weight  # floors
     # }
     model.add(Dropout(dropout))
-    i = 0  # dense layer index to avoid name conflicts
-    for units in classifier_hidden_layers:
-        model.add(Dense(units, name="classifier-"+str(i), activation=CLASSIFIER_ACTIVATION, use_bias=CLASSIFIER_BIAS))
+    for i in range(len(classifier_hidden_layers)):
+        model.add(Dense(classifier_hidden_layers[i], name="classifier-hidden"+str(i), activation=CLASSIFIER_ACTIVATION, use_bias=CLASSIFIER_BIAS))
         model.add(Dropout(dropout))
-        i += 1
     model.add(Dense(OUTPUT_DIM, name="activation-0", activation='sigmoid', use_bias=CLASSIFIER_BIAS))  # 'sigmoid' for multi-label classification
     model.compile(optimizer=CLASSIFIER_OPTIMIZER, loss=CLASSIFIER_LOSS, metrics=['accuracy'])
 
