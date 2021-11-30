@@ -106,34 +106,34 @@ if __name__ == "__main__":
         "-S",
         "--sae_hidden_layers",
         help=
-        "comma-separated numbers of units in SAE hidden layers; default is '256,128,64,128,256'",
-        default='256,128,64,128,256',
+        "comma-separated numbers of units in SAE hidden layers; default is '256,128,256'",
+        default='256,128,256',
         type=str)
     parser.add_argument(
         "-C",
         "--classifier_hidden_layers",
         help=
-        "comma-separated numbers of units in classifier hidden layers; default is '128,128'",
-        default='128,128',
+        "comma-separated numbers of units in classifier hidden layers; default is '64,128'",
+        default='64,128',
         type=str)
     parser.add_argument(
         "-D",
         "--dropout",
         help=
-        "dropout rate before and after classifier hidden layers; default 0.0",
-        default=0.0,
+        "dropout rate before and after classifier hidden layers; default 0.2",
+        default=0.2,
         type=float)
     parser.add_argument(
         "-N",
         "--neighbours",
-        help="number of (nearest) neighbour locations to consider in positioning; default is 1",
-        default=1,
+        help="number of (nearest) neighbour locations to consider in positioning; default is 8",
+        default=8,
         type=int)
     parser.add_argument(
         "--scaling",
         help=
-        "scaling factor for threshold (i.e., threshold=scaling*maximum) for the inclusion of nighbour locations to consider in positioning; default is 0.0",
-        default=0.0,
+        "scaling factor for threshold (i.e., threshold=scaling*maximum) for the inclusion of nighbour locations to consider in positioning; default is 0.2",
+        default=0.2,
         type=float)
     args = parser.parse_args()
 
